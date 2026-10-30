@@ -58,3 +58,54 @@ $l4 = new Livre('9780596007126', 'Algo Avance', 'Cormen');
 $bib->ajouter($l4);
 $res4 = $bib->rechercher('algo');
 verifier(count($res4) === 2, 'rechercher("algo") trouve 2 livres');
+
+// Test : statistiques d'une bibliotheque vide
+$bibStats = new Bibliotheque();
+verifier(
+    $bibStats->getStatistiques() === [
+        'total' => 0,
+        'disponibles' => 0,
+        'empruntes' => 0,
+        'taux' => 0,
+    ],
+    'getStatistiques() retourne des statistiques nulles pour une bibliotheque vide'
+);
+
+// Test : statistiques avec des livres disponibles et empruntes
+$livreStats1 = new Livre('9780321125217', 'Refactoring', 'Martin Fowler');
+$livreStats2 = new Livre('9780131103627', 'The C Programming Language', 'Kernighan');
+$livreStats3 = new Livre('9780201616224', 'The Pragmatic Programmer', 'Hunt');
+$bibStats->ajouter($livreStats1);
+$bibStats->ajouter($livreStats2);
+$bibStats->ajouter($livreStats3);
+verifier(
+    $bibStats->getStatistiques() === [
+        'total' => 3,
+        'disponibles' => 3,
+        'empruntes' => 0,
+        'taux' => 100.0,
+    ],
+    'getStatistiques() compte les livres tous disponibles'
+);
+
+$livreStats1->emprunter();
+verifier(
+    $bibStats->getStatistiques() === [
+        'total' => 3,
+        'disponibles' => 2,
+        'empruntes' => 1,
+        'taux' => 66.67,
+    ],
+    'getStatistiques() compte les emprunts et arrondit le taux a deux decimales'
+);
+
+$livreStats1->rendre();
+verifier(
+    $bibStats->getStatistiques() === [
+        'total' => 3,
+        'disponibles' => 3,
+        'empruntes' => 0,
+        'taux' => 100.0,
+    ],
+    'getStatistiques() met a jour les statistiques apres un retour'
+);
