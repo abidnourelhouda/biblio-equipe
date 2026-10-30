@@ -13,7 +13,7 @@ class Bibliotheque
     /**
      * Ajoute un livre a la bibliotheque.
      * @throws Exception si un livre avec le meme ISBN existe deja
-     */
+     *//*
     public function ajouter(Livre $l): void
     {
         if ($this->trouver($l->getIsbn()) !== null) {
@@ -57,7 +57,7 @@ class Bibliotheque
      * Recherche des livres par mot-cle dans le titre ou l'auteur (insensible a la casse).
      * @return Livre[]
      */
-    public function rechercher(string $mot): array
+    /*public function rechercher(string $mot): array
     {
         $resultats = [];
         foreach ($this->livres as $livre) {
@@ -67,5 +67,5 @@ class Bibliotheque
             }
         }
         return $resultats;
-    }
+    }*/
 }
